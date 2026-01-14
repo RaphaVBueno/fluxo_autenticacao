@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, status
+from datetime import datetime, timedelta, timezone
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from jose import JWTError, jwt
@@ -6,9 +7,8 @@ import os
 import bcrypt
 from dotenv import load_dotenv
 from .schemas import UserSchema
-
 from .database import SessionLocal, UserTable, create_db
-#configurar logica para expirar o token
+
 load_dotenv()
 create_db()
 app = FastAPI()
@@ -22,6 +22,7 @@ app.add_middleware(
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 60
 
 def get_db():
     db = SessionLocal()
@@ -64,7 +65,8 @@ async def login(user_data: UserSchema, db: Session = Depends(get_db)):
     if not bcrypt.checkpw(password_bytes, hashed_bytes):
         raise HTTPException(status_code=401, detail="Email ou senha incorretos")
 
-    token = jwt.encode({"sub": email}, SECRET_KEY, algorithm=ALGORITHM)
+    expire = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    token = jwt.encode({"sub": email, "exp": expire}, SECRET_KEY, algorithm=ALGORITHM)
     return {"access_token": token}
 
 @app.get("/auth")

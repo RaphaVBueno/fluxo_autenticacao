@@ -64,4 +64,3 @@ O frontend consiste em arquivos estáticos simples (`index.html`, `register.html
 - **Login (`/login`)**: Autenticação e recebimento de token JWT.
 - **Dashboard Protegido**: Página que só pode ser acessada com um token válido (armazenado no localStorage).
 - **Verificação de Token (`/auth`)**: Endpoint para validar o token atual.
-# fluxo_autenticacao
