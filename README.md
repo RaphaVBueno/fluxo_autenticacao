@@ -56,9 +56,9 @@ Siga os passos abaixo para rodar o servidor da API:
 O frontend consiste em arquivos estáticos simples (`index.html`, `register.html`, etc.).
 
 1. **Abra os arquivos no navegador:**
-   Você pode simplesmente abrir o arquivo `index.html` no seu navegador (clique duplo no arquivo).
+   Você pode simplesmente abrir o arquivo `index.html` no seu navegador.
 
-## 🛠️ Funcionalidades
+## 🛠️ Rotas e Funcionalidades
 
 - **Registro (`/register`)**: Criação de novas contas com senha hash (bcrypt).
 - **Login (`/login`)**: Autenticação e recebimento de token JWT.
