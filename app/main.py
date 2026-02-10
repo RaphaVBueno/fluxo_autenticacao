@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi.staticfiles import StaticFiles
 from datetime import datetime, timedelta, timezone
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -79,3 +80,5 @@ async def auth(token: str):
         return {"message": f"Autenticado como {email}"}
     except JWTError:
         raise HTTPException(status_code=401, detail="Token inválido ou expirado")
+
+app.mount("/", StaticFiles(directory="static", html=True), name="static")
